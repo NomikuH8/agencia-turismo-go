@@ -15,4 +15,6 @@ func checkPopulateDB(db *objects.BancoDados) {
 func main() {
 	db := objects.BancoDados{}
 	checkPopulateDB(&db)
+
+	gm := objects.GeradorMenu{}
 }

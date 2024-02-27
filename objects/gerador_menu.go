@@ -11,7 +11,7 @@ import (
 
 type GeradorMenu struct{}
 
-func (gm GeradorMenu) LimparTela() {
+func (gm *GeradorMenu) LimparTela() {
 	var cmd *exec.Cmd
 
 	switch runtime.GOOS {
@@ -25,7 +25,7 @@ func (gm GeradorMenu) LimparTela() {
 	cmd.Run()
 }
 
-func (gm GeradorMenu) GerarMenu(caminho string, opcoes []string, temSair bool, sairText string) {
+func (gm *GeradorMenu) GerarMenu(caminho string, opcoes []string, temSair bool, sairText string) {
 	if sairText == "" {
 		sairText = "0) Retornar"
 	}
@@ -46,7 +46,7 @@ func (gm GeradorMenu) GerarMenu(caminho string, opcoes []string, temSair bool, s
 	fmt.Println()
 }
 
-func (gm GeradorMenu) PedirInput(texto string) int {
+func (gm *GeradorMenu) PedirInput(texto string) int {
 	reader := bufio.NewReader(os.Stdin)
 
 	input := ""
@@ -68,8 +68,20 @@ func (gm GeradorMenu) PedirInput(texto string) int {
 	return numEscolhido
 }
 
-func (gm GeradorMenu) PegarOpcaoEscolhida() {
+func (gm *GeradorMenu) PegarOpcaoEscolhida(opcao int, opcoes []string) string {
+	opcaoSelecionado := ""
+
+	switch {
+	case opcao == 0:
+		opcaoSelecionado = "sair"
+	case opcao > 0 && opcao < len(opcoes):
+		opcaoSelecionado = opcoes[opcao-1]
+	default:
+		opcaoSelecionado = "invalido"
+	}
+
+	return opcaoSelecionado
 }
 
-func (gm GeradorMenu) FazerPerguntas() {
+func (gm *GeradorMenu) FazerPerguntas() {
 }
