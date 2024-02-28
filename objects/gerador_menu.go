@@ -83,5 +83,28 @@ func (gm *GeradorMenu) PegarOpcaoEscolhida(opcao int, opcoes []string) string {
 	return opcaoSelecionado
 }
 
-func (gm *GeradorMenu) FazerPerguntas() {
+func (gm *GeradorMenu) FazerPerguntas(perguntas []string) []string {
+	respostas := []string{}
+
+	for _, pergunta := range perguntas {
+		for {
+			fmt.Println(pergunta)
+			reader := bufio.NewReader(os.Stdin)
+			resposta, err := reader.ReadString('\n')
+
+			if err != nil {
+				fmt.Println("Erro ao ler string")
+				continue
+			}
+
+			if resposta == "" {
+				fmt.Println("Você deve escrever alguma coisa!")
+				continue
+			}
+
+			respostas = append(respostas, resposta)
+		}
+	}
+
+	return respostas
 }
